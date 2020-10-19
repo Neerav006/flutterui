@@ -1,0 +1,154 @@
+1. Difference between stateless and statefull widget? When to use stateless and statefull widget?
+2. Position widget relative to another widget (left to another widget , right to another widget) Is there any way to do this?
+3. Application template for common structure and style theme
+4. onresume ,pause equivalent flutter
+5. didupdate widget when called?
+
+
+//      body: Stack(
+//        children: [
+//          Container(
+//            color: Colors.deepPurple,
+//          ),
+//          SingleChildScrollView(
+//            child: Padding(
+//              padding: const EdgeInsets.fromLTRB(24.0, 80.0, 24.0, 32.0),
+//              child: Card(
+//                elevation: 15,
+//                shape: RoundedRectangleBorder(
+//                  borderRadius: BorderRadius.circular(15.0),
+//                ),
+//                color: Colors.white,
+//                child: Padding(
+//                  padding: const EdgeInsets.all(16.0),
+//                  child: Center(
+//                    child: Column(
+//                      children: [
+//                        Padding(
+//                          padding:
+//                              const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
+//                          child: Image.asset(
+//                            'images/flutter_logo.png',
+//                            width: 150,
+//                            height: 100,
+//                          ),
+//                        ),
+//                        SizedBox(
+//                          height: 16,
+//                        ),
+//                        TextField(
+//                          controller: _emailController,
+//                          decoration: InputDecoration(
+//                              // labelText: 'Username',
+//                              hintText: 'Email',
+//                              hintStyle: TextStyle(color: Colors.grey),
+//                              filled: true,
+//                              fillColor: Colors.white70,
+//                              prefixIcon: Icon(
+//                                Icons.email_rounded,
+//                                color: Colors.grey,
+//                              ),
+//                              border: OutlineInputBorder(
+//                                borderRadius: const BorderRadius.all(
+//                                  const Radius.circular(25.0),
+//                                ),
+//                              )),
+//                        ),
+//                        SizedBox(height: 12.0),
+//                        TextField(
+//                          controller: _passwordController,
+//                          decoration: InputDecoration(
+//                            hintText: 'Password',
+//                            hintStyle: TextStyle(color: Colors.grey),
+//                            filled: true,
+//                            fillColor: Colors.white70,
+//                            prefixIcon: Icon(
+//                              Icons.lock,
+//                              color: Colors.grey,
+//                            ),
+//                            border: OutlineInputBorder(
+//                              borderRadius: const BorderRadius.all(
+//                                const Radius.circular(25.0),
+//                              ),
+//                            ),
+//                          ),
+//                          obscureText: true,
+//                        ),
+//                        SizedBox(height: 16.0),
+//                        Align(
+//                          alignment: AlignmentDirectional.center,
+//                          child: Text(
+//                            'Forgot password?',
+//                            style: TextStyle(
+//                                // decoration: TextDecoration.underline,
+//                                color: Colors.deepPurple),
+//                            textAlign: TextAlign.center,
+//                          ),
+//                        ),
+//                        SizedBox(height: 16.0),
+//                        Container(
+//                          // width: double.infinity,
+//                          width: 200,
+//                          child: RaisedButton(
+//                              shape: RoundedRectangleBorder(
+//                                  borderRadius: BorderRadius.circular(18.0),
+//                                  side: BorderSide(color: Colors.deepPurple)),
+//                              color: Colors.deepPurple,
+//                              child: Padding(
+//                                padding: const EdgeInsets.all(12.0),
+//                                child: Text(
+//                                  'Login',
+//                                  style: TextStyle(
+//                                      color: Colors.white,
+//                                      fontWeight: FontWeight.w500,
+//                                      fontSize: 16),
+//                                ),
+//                              ),
+//                              onPressed: () {
+//                                String email = _emailController.text;
+//                                String password = _passwordController.text;
+//                                bool isEmailValid = RegExp(
+//                                        r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+//                                    .hasMatch(email);
+//                                if (email.isEmpty || !isEmailValid) {
+//                                  showSnackBarMessage("Email is not valid", context);
+//                                } else if (password.isEmpty) {
+//                                  showSnackBarMessage("Password is empty", context);
+//                                } else {
+//
+//                                }
+//                              }),
+//                        ),
+//                        SizedBox(
+//                          height: 12,
+//                        ),
+//                        Align(
+//                          alignment: AlignmentDirectional.center,
+//                          child: FlatButton(
+//                            onPressed: () {
+//                              // TODO navigate to another page
+//                              /*Navigator.push(
+//                              context,
+//                              MaterialPageRoute(
+//                                  builder: (context) =>
+//                                      MyHomePage(title: "Flutter")));*/
+//                            },
+//                            child: Text(
+//                              'SIGN UP',
+//                              style: TextStyle(
+//                                  color: Colors.deepPurple,
+//                                  fontSize: 16,
+//                                  fontWeight: FontWeight.w400),
+//                              textAlign: TextAlign.center,
+//                            ),
+//                          ),
+//                        ),
+//                      ],
+//                    ),
+//                  ),
+//                ),
+//              ),
+//            ),
+//          ),
+//        ],
+//      ),

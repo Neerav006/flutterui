@@ -1,0 +1,15 @@
+// 15 Oct 20
+Redesign login page with proper look and style.
+Explore stateful widget lifecycle , row,column,Card,SingleChildScrollView,TextField,Button widget more properties.
+
+// 16 Oct 20
+Validation for email and password added in login page and open new page and
+create simple navigation drawer design in that page.
+
+// 19- Oct -20 (1 week)
+- Basic Understanding of all of the required widget
+- Make UI responsive for various screen size
+- Create the demo of application for show state management using setState().(Statfull widget).
+- Understand asynchronous programming in flutter (async and await, future , stream).
+- Work with network call and rest api for network operation
+- Create one demo with api integration in flutter and create appropriate UI for it.
