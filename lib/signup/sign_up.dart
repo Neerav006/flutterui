@@ -1,3 +1,4 @@
+import 'package:counter_app/responsive_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../home.dart';
@@ -34,13 +35,18 @@ class _SignUpPageState extends State<SignUpPage> {
       body: OrientationBuilder(
         builder: (context, orientation) {
           if (orientation == Orientation.portrait) {
-            leftMargin = 16.0;
+            leftMargin = MediaQuery.of(context).size.width * .05;
           } else {
-            leftMargin = 80;
+            leftMargin = MediaQuery.of(context).size.width * 0.20;
           }
           return Stack(children: [
             Container(
-              color: Colors.deepPurple,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("images/bg_login.webp"),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             Form(
               key: _formKey,
@@ -80,14 +86,24 @@ class _SignUpPageState extends State<SignUpPage> {
           padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
           child: Text(
             'New Registration',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+            style: TextStyle(
+                fontSize: ResponsiveWidget.isSmallScreen(context)
+                    ? 16
+                    : ResponsiveWidget.isMediumScreen(context)
+                        ? 18
+                        : 20,
+                fontWeight: FontWeight.w700),
           ),
         ),
         SizedBox(
           height: 16,
         ),
         CircleAvatar(
-          radius: 35,
+          radius: ResponsiveWidget.isSmallScreen(context)
+              ? 35
+              : ResponsiveWidget.isMediumScreen(context)
+                  ? 38
+                  : 40,
           backgroundImage: AssetImage(_genderImage),
           backgroundColor: Colors.transparent,
         ),
@@ -96,166 +112,215 @@ class _SignUpPageState extends State<SignUpPage> {
           height: 16,
         ),
         TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          textInputAction: TextInputAction.next,
-          focusNode: focusNodeUserName,
-          controller: _usernameController,
-          validator: (name) {
-            if (name.trim().isNotEmpty) {
-              return null;
-            } else {
-              return "User name is empty";
-            }
-          },
-          onFieldSubmitted: (_) {
-            fieldFocusChange(context, focusNodeUserName, focusNodeEmail);
-          },
-          onSaved: (name) {
-            this._name = name;
-          },
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: -5),
-            // labelText: 'Username',
-            hintText: 'Name',
-            hintStyle: TextStyle(color: Colors.grey),
-            filled: true,
-            fillColor: Colors.white70,
-            prefixIcon: Icon(
-              Icons.account_circle,
-              color: Colors.grey,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(
-                const Radius.circular(25.0),
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            focusNode: focusNodeUserName,
+            controller: _usernameController,
+            validator: (name) {
+              if (name.trim().isNotEmpty) {
+                return null;
+              } else {
+                return "User name is empty";
+              }
+            },
+            onFieldSubmitted: (_) {
+              fieldFocusChange(context, focusNodeUserName, focusNodeEmail);
+            },
+            onSaved: (name) {
+              this._name = name;
+            },
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: -5),
+              // labelText: 'Username',
+              hintText: 'Name',
+              hintStyle: TextStyle(
+                  color: Colors.grey,
+                  fontSize: ResponsiveWidget.isSmallScreen(context)
+                      ? 15
+                      : ResponsiveWidget.isMediumScreen(context)
+                          ? 16
+                          : 18),
+              filled: true,
+              fillColor: Colors.white70,
+              prefixIcon: Icon(
+                Icons.account_circle,
+                color: Colors.grey,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(25.0),
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(25.0),
+                ),
+                borderSide: BorderSide(color: Colors.deepPurple, width: 1.0),
               ),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(
-                const Radius.circular(25.0),
-              ),
-              borderSide: BorderSide(color: Colors.deepPurple, width: 1.0),
-            ),
-          ),
-        ),
+            style: TextStyle(
+                fontSize: ResponsiveWidget.isSmallScreen(context)
+                    ? 15
+                    : ResponsiveWidget.isMediumScreen(context)
+                        ? 16
+                        : 18,
+                color: Colors.black)),
         SizedBox(
           height: 16.0,
         ),
         TextFormField(
-          keyboardType: TextInputType.emailAddress,
-          textInputAction: TextInputAction.next,
-          focusNode: focusNodeEmail,
-          controller: _emailController,
-          validator: (email) {
-            bool isEmailValid =
-                RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
-                    .hasMatch(email);
-            if (isEmailValid) {
-              return null;
-            } else {
-              return "Email is not valid";
-            }
-          },
-          onFieldSubmitted: (_) {
-            fieldFocusChange(context, focusNodeEmail, focusNodePassword);
-          },
-          onSaved: (email) {
-            this._email = email;
-          },
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: -5),
-            // labelText: 'Username',
-            hintText: 'Email',
-            hintStyle: TextStyle(color: Colors.grey),
-            filled: true,
-            fillColor: Colors.white70,
-            prefixIcon: Icon(
-              Icons.email_rounded,
-              color: Colors.grey,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(
-                const Radius.circular(25.0),
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            focusNode: focusNodeEmail,
+            controller: _emailController,
+            validator: (email) {
+              bool isEmailValid =
+                  RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$')
+                      .hasMatch(email);
+              if (isEmailValid) {
+                return null;
+              } else {
+                return "Email is not valid";
+              }
+            },
+            onFieldSubmitted: (_) {
+              fieldFocusChange(context, focusNodeEmail, focusNodePassword);
+            },
+            onSaved: (email) {
+              this._email = email;
+            },
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: -5),
+              // labelText: 'Username',
+              hintText: 'Email',
+              hintStyle: TextStyle(color: Colors.grey),
+              filled: true,
+              fillColor: Colors.white70,
+              prefixIcon: Icon(
+                Icons.email_rounded,
+                color: Colors.grey,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(25.0),
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(25.0),
+                ),
+                borderSide: BorderSide(color: Colors.deepPurple, width: 1.0),
               ),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(
-                const Radius.circular(25.0),
-              ),
-              borderSide: BorderSide(color: Colors.deepPurple, width: 1.0),
-            ),
-          ),
-        ),
+            style: TextStyle(
+                fontSize: ResponsiveWidget.isSmallScreen(context)
+                    ? 15
+                    : ResponsiveWidget.isMediumScreen(context)
+                        ? 16
+                        : 18,
+                color: Colors.black)),
         SizedBox(height: 12.0),
         TextFormField(
-          textInputAction: TextInputAction.done,
-          focusNode: focusNodePassword,
-          controller: _passwordController,
-          validator: (password) {
-            if (password.trim().isEmpty) {
-              return "Password is empty";
-            } else {
-              return null;
-            }
-          },
-          onSaved: (password) {
-            this._password = password;
-          },
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: -5),
-            hintText: 'Password',
-            hintStyle: TextStyle(color: Colors.grey),
-            filled: true,
-            fillColor: Colors.white70,
-            prefixIcon: Icon(
-              Icons.lock,
-              color: Colors.grey,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(
-                const Radius.circular(25.0),
+            textInputAction: TextInputAction.done,
+            focusNode: focusNodePassword,
+            controller: _passwordController,
+            validator: (password) {
+              if (password.trim().isEmpty) {
+                return "Password is empty";
+              } else {
+                return null;
+              }
+            },
+            onSaved: (password) {
+              this._password = password;
+            },
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(vertical: -5),
+              hintText: 'Password',
+              hintStyle: TextStyle(color: Colors.grey),
+              filled: true,
+              fillColor: Colors.white70,
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Colors.grey,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(25.0),
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(25.0),
+                ),
+                borderSide: BorderSide(color: Colors.deepPurple, width: 1.0),
               ),
             ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(
-                const Radius.circular(25.0),
-              ),
-              borderSide: BorderSide(color: Colors.deepPurple, width: 1.0),
-            ),
-          ),
-          obscureText: true,
-        ),
+            obscureText: true,
+            style: TextStyle(
+                fontSize: ResponsiveWidget.isSmallScreen(context)
+                    ? 15
+                    : ResponsiveWidget.isMediumScreen(context)
+                        ? 16
+                        : 18,
+                color: Colors.black)),
         SizedBox(height: 16.0),
         // radio button selection male or female
         Text(
           "Gender: ",
-          style: TextStyle(color: Colors.deepPurple),
+          style: TextStyle(
+            color: Colors.deepPurple,
+            fontSize: ResponsiveWidget.isSmallScreen(context)
+                ? 15
+                : ResponsiveWidget.isMediumScreen(context)
+                    ? 16
+                    : 18,
+          ),
         ),
         buildGenderRadioBtn(),
         SizedBox(height: 16.0),
         Text(
           "Country: ",
-          style: TextStyle(color: Colors.deepPurple),
+          style: TextStyle(
+            color: Colors.deepPurple,
+            fontSize: ResponsiveWidget.isSmallScreen(context)
+                ? 15
+                : ResponsiveWidget.isMediumScreen(context)
+                    ? 16
+                    : 18,
+          ),
         ),
         DropdownButton<String>(
-          onTap: (){
+          onTap: () {
             FocusScope.of(context).unfocus();
           },
           isExpanded: true,
           value: country,
-          items: <String>['India', 'USA', 'England', 'Australia'].map((String value) {
+          items: <String>['India', 'USA', 'England', 'Australia']
+              .map((String value) {
             return new DropdownMenuItem<String>(
               value: value,
-              child: new Text(value),
+              child: new Text(
+                value,
+                style: TextStyle(
+                  fontSize: ResponsiveWidget.isSmallScreen(context)
+                      ? 15
+                      : ResponsiveWidget.isMediumScreen(context)
+                          ? 16
+                          : 18,
+                ),
+              ),
             );
           }).toList(),
           onChanged: (value) {
             setState(() {
               this.country = value;
             });
-
           },
         ),
-        SizedBox(height: 16,),
+        SizedBox(
+          height: 16,
+        ),
         Container(
           width: double.infinity,
           // width: 200,
@@ -271,7 +336,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
-                      fontSize: 16),
+                      fontSize: ResponsiveWidget.isSmallScreen(context)
+                          ? 16
+                          : ResponsiveWidget.isMediumScreen(context)
+                              ? 18
+                              : 20),
                 ),
               ),
               onPressed: () {
@@ -319,7 +388,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             title: Text(
               'Male',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: ResponsiveWidget.isSmallScreen(context)
+                  ? 15
+                  : ResponsiveWidget.isMediumScreen(context)
+                  ? 16
+                  : 18,),
             ),
             leading: Radio(
                 value: 0,
@@ -339,7 +412,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             title: Text(
               'Female',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: ResponsiveWidget.isSmallScreen(context)
+                  ? 15
+                  : ResponsiveWidget.isMediumScreen(context)
+                  ? 16
+                  : 18,
+
+              ),
             ),
             leading: Radio(
                 value: 1,

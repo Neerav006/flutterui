@@ -314,7 +314,7 @@ class _LoginPageStateState extends State<LoginPageState> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(96.0, 64.0, 96.0, 32.0),
+                padding:  EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.2, 64.0, MediaQuery.of(context).size.width*0.2, 32.0),
                 child: Card(
                   elevation: 15,
                   shape: RoundedRectangleBorder(
