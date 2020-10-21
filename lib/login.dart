@@ -54,6 +54,8 @@ class _LoginPageStateState extends State<LoginPageState> {
   Widget build(BuildContext context) {
     deviceWidth = MediaQuery.of(context).size.width;
     deviceHeight = MediaQuery.of(context).size.height;
+    print("${MediaQuery.of(context).size.width}");
+
     return Scaffold(
       body: Builder(
         builder: (context) => OrientationBuilder(
@@ -80,6 +82,7 @@ class _LoginPageStateState extends State<LoginPageState> {
 
   // show potrait login page layout
   Widget showPotraitLoginPage(orientation){
+    print("${MediaQuery.of(context).size.width}");
     return
       orientation == Orientation.portrait?
       Stack(
