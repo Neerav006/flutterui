@@ -84,7 +84,7 @@ class _LoginPageStateState extends State<LoginPageState> {
   Widget showPotraitLoginPage(orientation){
     print("${MediaQuery.of(context).size.width}");
     return
-      orientation == Orientation.portrait?
+      MediaQuery.of(context).orientation == Orientation.portrait?
       Stack(
       children: [
         Container(

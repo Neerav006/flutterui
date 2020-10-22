@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:counter_app/appdrawer.dart';
 import 'package:counter_app/homefeed/home_newsfeed.dart';
+import 'package:counter_app/paginatedlist/pagination_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -32,7 +33,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
        appBar: AppBar(title: Text("Home"),),
        drawer: AppDrawer(),
-       body: NewsFeedPage(articleList: this.articleList,),
+       body: PaginatedHome()
+      // NewsFeedPage(articleList: this.articleList,),
 
     );
   }

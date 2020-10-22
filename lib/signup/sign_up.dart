@@ -29,12 +29,15 @@ class _SignUpPageState extends State<SignUpPage> {
 
   var leftMargin = 16.0;
 
+  var isSwitched = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: OrientationBuilder(
         builder: (context, orientation) {
-          if (orientation == Orientation.portrait) {
+          // check orientation using media query
+          if (MediaQuery.of(context).orientation == Orientation.portrait) {
             leftMargin = MediaQuery.of(context).size.width * .05;
           } else {
             leftMargin = MediaQuery.of(context).size.width * 0.20;
@@ -321,16 +324,46 @@ class _SignUpPageState extends State<SignUpPage> {
         SizedBox(
           height: 16,
         ),
+
+        Row(
+          children: [
+            Text(
+              "Subscription to our newsletter : ",
+              style: TextStyle(
+                color: Colors.deepPurple,
+                fontSize: ResponsiveWidget.isSmallScreen(context)
+                    ? 15
+                    : ResponsiveWidget.isMediumScreen(context)
+                    ? 16
+                    : 18,
+              ),
+            ),
+            Switch(
+              value: isSwitched,
+              onChanged: (value){
+                setState(() {
+                  isSwitched=value;
+                  print(isSwitched);
+                });
+              },
+              activeTrackColor: Colors.deepPurpleAccent[100],
+              activeColor: Colors.deepPurple,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 16,
+        ),
         Container(
           width: double.infinity,
           // width: 200,
           child: RaisedButton(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
+                  borderRadius: BorderRadius.circular(25.0),
                   side: BorderSide(color: Colors.deepPurple)),
               color: Colors.deepPurple,
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(14.0),
                 child: Text(
                   'Register',
                   style: TextStyle(

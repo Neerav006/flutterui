@@ -23,3 +23,7 @@ Create basic registration form design for portrait and landscape mode.
 20-Oct-20
 Check documentation and tutorial for basic of ListView builder,GridView Builder ,
 and Navigation routes in application.
+
+21-Oct-20
+Check documentation and tutorial for use of async,await in flutter application.
+Create simple design for ListView builder from static list data.
