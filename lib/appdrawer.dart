@@ -1,3 +1,4 @@
+import 'package:counter_app/aboutus/post_api_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,7 @@ class AppDrawer extends StatelessWidget {
           _createDrawerItem(
               icon: Icons.contacts, text: 'Profile', onTap: () {
                 Navigator.pop(context);
+                Navigator.push(context,MaterialPageRoute(builder: (context) => PostApiPage()));
           }),
           _createDrawerItem(icon: Icons.event, text: 'About us', onTap: () {
             Navigator.pop(context);

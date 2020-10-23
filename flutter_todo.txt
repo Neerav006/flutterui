@@ -27,3 +27,7 @@ and Navigation routes in application.
 21-Oct-20
 Check documentation and tutorial for use of async,await in flutter application.
 Create simple design for ListView builder from static list data.
+
+22-Oct-20
+Check documentation  and tutorial  for api calling in flutter application.
+Call  jsonplace holder get method api and parse json response of api and show data in listview.
