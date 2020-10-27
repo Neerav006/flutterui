@@ -1,4 +1,5 @@
 import 'package:counter_app/aboutus/post_api_page.dart';
+import 'package:counter_app/aboutus/stream_example.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class AppDrawer extends StatelessWidget {
           }),
           _createDrawerItem(icon: Icons.event, text: 'About us', onTap: () {
             Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => StreamExample()));
           }),
           _createDrawerItem(
               icon: Icons.contact_phone, text: 'Contact us', onTap: () {

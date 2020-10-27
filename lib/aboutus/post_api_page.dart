@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 class PostApiPage extends StatefulWidget {
   @override
@@ -15,6 +16,13 @@ class _PostApiPageState extends State<PostApiPage> {
   Future<List<Album>> _futureAlbum;
   var isLoading = false;
   var isTitleError = false;
+  var logger;
+
+  @override
+  void initState() {
+    super.initState();
+    logger = Logger();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +78,7 @@ class _PostApiPageState extends State<PostApiPage> {
                               // this._list.add(Album(id: 1, title: this.titleValue));
                               if (_titleController.text.trim().isNotEmpty) {
                                 isTitleError = false;
-                                createAlbum(_titleController.text);
+                               _futureAlbum = createAlbum(_titleController.text);
                               } else {
                                 isTitleError = true;
                               }
@@ -94,9 +102,11 @@ class _PostApiPageState extends State<PostApiPage> {
           Expanded(
               child: Padding(
             padding: const EdgeInsets.all(16.0),
+            // Future builder for update widget when future complete.
             child: FutureBuilder<List<Album>>(
               future: _futureAlbum,
               builder: (context, snapshot) {
+                logger.e(snapshot.connectionState);
                 if (snapshot.connectionState == ConnectionState.none &&
                     snapshot.hasData == null) {
                   //print('project snapshot data is: ${projectSnap.data}');
@@ -114,6 +124,7 @@ class _PostApiPageState extends State<PostApiPage> {
     );
   }
 
+  // Build list view here
   ListView buildListView() {
     return ListView.separated(
         itemBuilder: (context, index) {
@@ -130,6 +141,7 @@ class _PostApiPageState extends State<PostApiPage> {
         itemCount: _list.length);
   }
 
+  // Post api for title
   Future<List<Album>> createAlbum(String title) async {
     setState(() {
       isLoading = true;
@@ -154,11 +166,15 @@ class _PostApiPageState extends State<PostApiPage> {
       _list.add(album);
       return _list;
     } else {
+      setState(() {
+        isLoading = false;
+      });
       throw Exception('Failed to create album.');
     }
   }
 }
 
+// album model class
 class Album {
   final int id;
   final String title;
