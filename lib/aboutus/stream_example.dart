@@ -77,6 +77,7 @@ class _StreamExampleState extends State<StreamExample> {
                       SizedBox(
                         height: 25,
                       ),
+                      // if it is running than show stop button
                       !_streamSubscription.isPaused
                           ? OutlineButton(
                               onPressed: () {
@@ -91,6 +92,7 @@ class _StreamExampleState extends State<StreamExample> {
                                    fontSize: 20
                                 ),),
                               ))
+                           // else show start button
                           : OutlineButton(
                               onPressed: () {
                                setState(() {

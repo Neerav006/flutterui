@@ -81,7 +81,7 @@ class _PagingListState extends State<PagingList> {
           child: buildCard(context, jsonPhotos),
         );
       },
-      itemCount: snapshot.data?.length,
+      itemCount: snapshot.data?.length??0,
     );
   }
 

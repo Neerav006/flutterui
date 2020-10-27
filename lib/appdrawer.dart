@@ -1,5 +1,6 @@
 import 'package:counter_app/aboutus/post_api_page.dart';
 import 'package:counter_app/aboutus/stream_example.dart';
+import 'package:counter_app/gridviewlist/GridViewPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,17 +13,18 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           _createHeader(),
           _createDrawerItem(
-              icon: Icons.contacts, text: 'Profile', onTap: () {
+              icon: Icons.contacts, text: 'Post Api', onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,MaterialPageRoute(builder: (context) => PostApiPage()));
           }),
-          _createDrawerItem(icon: Icons.event, text: 'About us', onTap: () {
+          _createDrawerItem(icon: Icons.event, text: 'Stream Example', onTap: () {
             Navigator.pop(context);
             Navigator.push(context, MaterialPageRoute(builder: (context) => StreamExample()));
           }),
           _createDrawerItem(
-              icon: Icons.contact_phone, text: 'Contact us', onTap: () {
+              icon: Icons.contact_phone, text: 'GridView', onTap: () {
             Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => GridViewPage(),));
           }),
           Divider(),
         ],
