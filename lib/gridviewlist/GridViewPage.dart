@@ -31,9 +31,6 @@ class _GridViewPageState extends State<GridViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('GridView'),
-      ),
       body: Container(
         child: _buildListView(),
       ),

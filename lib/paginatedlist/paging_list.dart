@@ -70,9 +70,23 @@ class _PagingListState extends State<PagingList> {
   }
 
   // List view
-  ListView buildListView(AsyncSnapshot snapshot) {
-    return ListView.builder(
-      itemBuilder: (context, position) {
+  CustomScrollView buildListView(AsyncSnapshot snapshot) {
+    return CustomScrollView(
+      slivers: [
+        SliverList(delegate: SliverChildListDelegate(
+            List<Widget>.generate(snapshot.data.length,(position){
+              JsonPlaceHolderPhotos jsonPhotos = snapshot.data[position];
+              return InkWell(
+                onTap: () {
+                  print("clicked item: $position");
+                },
+                child: buildCard(context, jsonPhotos),
+              );
+            })
+        )
+        )
+      ],
+      /*itemBuilder: (context, position) {
         JsonPlaceHolderPhotos jsonPhotos = snapshot.data[position];
         return InkWell(
           onTap: () {
@@ -81,7 +95,7 @@ class _PagingListState extends State<PagingList> {
           child: buildCard(context, jsonPhotos),
         );
       },
-      itemCount: snapshot.data?.length??0,
+      itemCount: snapshot.data?.length??0,*/
     );
   }
 

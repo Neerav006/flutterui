@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:counter_app/appdrawer.dart';
+import 'package:counter_app/gridviewlist/GridViewPage.dart';
 import 'package:counter_app/homefeed/home_newsfeed.dart';
 import 'package:counter_app/paginatedlist/pagination_home.dart';
 import 'package:flutter/material.dart';
@@ -13,30 +14,80 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   List<Articles> articleList = [];
+  TabController _tabController;
 
   @override
   void initState() {
     super.initState();
+    _tabController = new TabController(length: 2, vsync: this);
     loadNews().then((value) {
-         setState(() {
-           this.articleList = value.articles;
-         });
+      setState(() {
+        this.articleList = value.articles;
+      });
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(title: Text("Home"),),
-       drawer: AppDrawer(),
-       body: PaginatedHome()
-      // NewsFeedPage(articleList: this.articleList,),
+        /*appBar: AppBar(
+          centerTitle: true,
+          title: Text("Home"),
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                icon: Icon(Icons.list),
+                text: "List",
+              ),
+              Tab(
+                icon: Icon(Icons.grid_view),
+                text: "Grid",
+              )
+            ],
+            controller: _tabController,
+          ),
+        ),*/
+        drawer: AppDrawer(),
+        body: DefaultTabController(
 
-    );
+          length: 2,
+          child: NestedScrollView(
+
+            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+              return [
+                 SliverAppBar(
+                    centerTitle: true,
+                    floating: true,
+                    pinned: true,
+                    title: Text('Home'),
+                    bottom: TabBar(
+                      tabs: [
+                        Tab(
+                          icon: Icon(Icons.list),
+                          text: "List",
+                        ),
+                        Tab(
+                          icon: Icon(Icons.grid_view),
+                          text: "Grid",
+                        )
+                      ],
+
+                    ),
+                  ),
+
+              ];
+            },
+            body: TabBarView(
+              children: [PaginatedHome(), GridViewPage()],
+            ),
+          ),
+        )
+        // NewsFeedPage(articleList: this.articleList,),
+
+        );
   }
 
   Future<String> _loadNewsAsset() async {

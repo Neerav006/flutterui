@@ -1,3 +1,4 @@
+import 'package:counter_app/generated/l10n.dart';
 import 'package:counter_app/responsive_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(S.current);
     return Scaffold(
       body: OrientationBuilder(
         builder: (context, orientation) {
@@ -82,13 +84,14 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Column buildColumnOfForm(BuildContext context) {
+    print(S.current);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(0.0, 16.0, 0.0, 0.0),
           child: Text(
-            'New Registration',
+            S.current.newRegistration,
             style: TextStyle(
                 fontSize: ResponsiveWidget.isSmallScreen(context)
                     ? 16
