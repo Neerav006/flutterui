@@ -21,21 +21,19 @@ class _GridViewPageState extends State<GridViewPage> {
   void initState() {
     _getMoreData(page);
     super.initState();
-    _sc.addListener(() {
+    /* _sc.addListener(() {
       if (_sc.position.pixels == _sc.position.maxScrollExtent) {
         _getMoreData(page);
       }
-    });
+    });*/
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        child: _buildListView(),
-      ),
-      //resizeToAvoidBottomPadding: false,
+    return Container(
+      child: _buildListView(),
     );
+    //resizeToAvoidBottomPadding: false,
   }
 
   @override
@@ -83,37 +81,55 @@ class _GridViewPageState extends State<GridViewPage> {
         users.isEmpty
             ? Container()
             : Expanded(
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount:
-                          ResponsiveWidget.isLandSacpeOrientation(context)
-                              ? 3
-                              : 2),
-                  itemBuilder: (context, index) {
-                    return Stack(
-                      children: [
-                        Positioned.fill(
-                          child: Card(
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
-                            child: Container(
-                              child: Image.network(
-                                users[index]['picture']['large'],
-                                fit: BoxFit.cover,
-                              ),
-                              decoration: BoxDecoration(),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {},
-                        )
-                      ],
-                    );
+                child: NotificationListener<ScrollNotification>(
+                  // ignore: missing_return
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (!isLoading &&
+                        scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent) {
+                      print("Reach scroll end:---");
+                      _getMoreData(page);
+                    }
                   },
-                  itemCount: users.length,
-                  controller: _sc,
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverGrid(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount:
+                                      ResponsiveWidget.isLandSacpeOrientation(
+                                              context)
+                                          ? 3
+                                          : 2),
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return Stack(
+                                children: [
+                                  Positioned.fill(
+                                    child: Card(
+                                      elevation: 5,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5)),
+                                      child: Container(
+                                        child: Image.network(
+                                          users[index]['picture']['large'],
+                                          fit: BoxFit.cover,
+                                        ),
+                                        decoration: BoxDecoration(),
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {},
+                                  )
+                                ],
+                              );
+                            },
+                            childCount: users.length,
+                          )),
+                    ],
+                  ),
                 ),
               ),
         isLoading ? _buildProgressIndicator() : Container()

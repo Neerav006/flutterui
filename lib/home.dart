@@ -4,6 +4,7 @@ import 'package:counter_app/appdrawer.dart';
 import 'package:counter_app/gridviewlist/GridViewPage.dart';
 import 'package:counter_app/homefeed/home_newsfeed.dart';
 import 'package:counter_app/paginatedlist/pagination_home.dart';
+import 'package:counter_app/paginatedlist/paging_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -52,36 +53,33 @@ class _HomePageState extends State<HomePage>
         ),*/
         drawer: AppDrawer(),
         body: DefaultTabController(
-
           length: 2,
           child: NestedScrollView(
 
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return [
-                 SliverAppBar(
-                    centerTitle: true,
-                    floating: true,
-                    pinned: true,
-                    title: Text('Home'),
-                    bottom: TabBar(
-                      tabs: [
-                        Tab(
-                          icon: Icon(Icons.list),
-                          text: "List",
-                        ),
-                        Tab(
-                          icon: Icon(Icons.grid_view),
-                          text: "Grid",
-                        )
-                      ],
-
-                    ),
+                SliverAppBar(
+                  centerTitle: true,
+                  floating: true,
+                  pinned: true,
+                  title: Text('Home'),
+                  bottom: TabBar(
+                    tabs: [
+                      Tab(
+                        icon: Icon(Icons.list),
+                        text: "List",
+                      ),
+                      Tab(
+                        icon: Icon(Icons.grid_view),
+                        text: "Grid",
+                      )
+                    ],
                   ),
-
+                ),
               ];
             },
             body: TabBarView(
-              children: [PaginatedHome(), GridViewPage()],
+              children: [PagingList(), GridViewPage()],
             ),
           ),
         )
