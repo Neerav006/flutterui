@@ -9,7 +9,7 @@ class GridViewPage extends StatefulWidget {
   _GridViewPageState createState() => _GridViewPageState();
 }
 
-class _GridViewPageState extends State<GridViewPage> {
+class _GridViewPageState extends State<GridViewPage> with AutomaticKeepAliveClientMixin  {
   bool isLoading = false;
   Dio dio = new Dio();
   List users = new List();
@@ -112,9 +112,11 @@ class _GridViewPageState extends State<GridViewPage> {
                                           borderRadius:
                                               BorderRadius.circular(5)),
                                       child: Container(
-                                        child: Image.network(
-                                          users[index]['picture']['large'],
+                                        child: FadeInImage.assetNetwork(
+                                          image: users[index]['picture']
+                                              ['large'],
                                           fit: BoxFit.cover,
+                                          placeholder: 'images/placeholder.png',
                                         ),
                                         decoration: BoxDecoration(),
                                       ),
@@ -149,4 +151,7 @@ class _GridViewPageState extends State<GridViewPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

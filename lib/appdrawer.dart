@@ -1,5 +1,6 @@
 import 'package:counter_app/aboutus/post_api_page.dart';
 import 'package:counter_app/aboutus/stream_example.dart';
+import 'package:counter_app/bottomnavbar/bottom_nav_bar.dart';
 import 'package:counter_app/gridviewlist/GridViewPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,9 +23,9 @@ class AppDrawer extends StatelessWidget {
             Navigator.push(context, MaterialPageRoute(builder: (context) => StreamExample()));
           }),
           _createDrawerItem(
-              icon: Icons.contact_phone, text: 'GridView', onTap: () {
+              icon: Icons.contact_phone, text: 'BottomNavigation', onTap: () {
             Navigator.pop(context);
-            Navigator.push(context, MaterialPageRoute(builder: (context) => GridViewPage(),));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavBar(),));
           }),
           Divider(),
         ],

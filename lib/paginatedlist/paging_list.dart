@@ -11,7 +11,7 @@ class PagingList extends StatefulWidget {
   _PagingListState createState() => _PagingListState();
 }
 
-class _PagingListState extends State<PagingList> {
+class _PagingListState extends State<PagingList> with AutomaticKeepAliveClientMixin {
   var pageStart = 0;
   var pageEnd = 10;
   var lastPage = 5000;
@@ -191,4 +191,7 @@ class _PagingListState extends State<PagingList> {
       throw Exception('Failed to load album');
     }
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
