@@ -1,7 +1,7 @@
 import 'package:counter_app/generated/l10n.dart';
 import 'package:counter_app/responsive_widget.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 import '../home.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -27,6 +27,8 @@ class _SignUpPageState extends State<SignUpPage> {
   String _password = "";
   int radioSelection = 0;
   String country = "India";
+  String birthDay = "";
+  DateTime  selectedDateTime;
 
   var leftMargin = 16.0;
 
@@ -285,6 +287,43 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
         buildGenderRadioBtn(),
         SizedBox(height: 16.0),
+        // birth date picker here
+        Text(
+          "Birth Date: ",
+          style: TextStyle(
+            color: Colors.deepPurple,
+            fontSize: ResponsiveWidget.isSmallScreen(context)
+                ? 15
+                : ResponsiveWidget.isMediumScreen(context)
+                    ? 16
+                    : 18,
+          ),
+        ),
+        SizedBox(
+          height: 4,
+        ),
+        InkWell(
+          onTap: () {
+            _selectDate(context);
+          },
+          child: Container(
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: selectedDateTime !=null?Text(
+                '${DateFormat.yMMMd().format(selectedDateTime)}',
+                style: TextStyle(
+                  fontSize: ResponsiveWidget.isSmallScreen(context)
+                      ? 15
+                      : ResponsiveWidget.isMediumScreen(context)
+                          ? 16
+                          : 18,
+                ),
+              ):Text("Select Date"),
+            ),
+          ),
+        ),
+        SizedBox(height: 16.0),
         Text(
           "Country: ",
           style: TextStyle(
@@ -337,15 +376,15 @@ class _SignUpPageState extends State<SignUpPage> {
                 fontSize: ResponsiveWidget.isSmallScreen(context)
                     ? 15
                     : ResponsiveWidget.isMediumScreen(context)
-                    ? 16
-                    : 18,
+                        ? 16
+                        : 18,
               ),
             ),
             Switch(
               value: isSwitched,
-              onChanged: (value){
+              onChanged: (value) {
                 setState(() {
-                  isSwitched=value;
+                  isSwitched = value;
                   print(isSwitched);
                 });
               },
@@ -424,11 +463,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             title: Text(
               'Male',
-              style: TextStyle(fontSize: ResponsiveWidget.isSmallScreen(context)
-                  ? 15
-                  : ResponsiveWidget.isMediumScreen(context)
-                  ? 16
-                  : 18,),
+              style: TextStyle(
+                fontSize: ResponsiveWidget.isSmallScreen(context)
+                    ? 15
+                    : ResponsiveWidget.isMediumScreen(context)
+                        ? 16
+                        : 18,
+              ),
             ),
             leading: Radio(
                 value: 0,
@@ -448,12 +489,12 @@ class _SignUpPageState extends State<SignUpPage> {
                 EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
             title: Text(
               'Female',
-              style: TextStyle(fontSize: ResponsiveWidget.isSmallScreen(context)
-                  ? 15
-                  : ResponsiveWidget.isMediumScreen(context)
-                  ? 16
-                  : 18,
-
+              style: TextStyle(
+                fontSize: ResponsiveWidget.isSmallScreen(context)
+                    ? 15
+                    : ResponsiveWidget.isMediumScreen(context)
+                        ? 16
+                        : 18,
               ),
             ),
             leading: Radio(
@@ -480,5 +521,16 @@ class _SignUpPageState extends State<SignUpPage> {
       BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context, firstDate: DateTime(1800), initialDate: DateTime.now(), lastDate: DateTime(2500),
+      // Refer step 1
+    );
+    if (picked != null && picked != selectedDateTime)
+      setState(() {
+        selectedDateTime = picked;
+      });
   }
 }

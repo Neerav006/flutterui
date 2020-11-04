@@ -2,6 +2,7 @@ import 'package:counter_app/aboutus/post_api_page.dart';
 import 'package:counter_app/aboutus/stream_example.dart';
 import 'package:counter_app/bottomnavbar/bottom_nav_bar.dart';
 import 'package:counter_app/gridviewlist/GridViewPage.dart';
+import 'package:counter_app/pageview/page_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +27,11 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.contact_phone, text: 'BottomNavigation', onTap: () {
             Navigator.pop(context);
             Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavBar(),));
+          }),
+          _createDrawerItem(
+              icon: Icons.airplay_rounded, text: 'PageView', onTap: () {
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => PageViewWidget(),));
           }),
           Divider(),
         ],
@@ -70,7 +76,7 @@ class AppDrawer extends StatelessWidget {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Icon(icon,size: 24,),
+          Icon(icon,size: 24,color: Colors.lightBlueAccent,),
           Padding(
             padding: EdgeInsets.only(left: 16.0),
             child: Text(text),
