@@ -302,27 +302,7 @@ class _SignUpPageState extends State<SignUpPage> {
         SizedBox(
           height: 4,
         ),
-        InkWell(
-          onTap: () {
-            _selectDate(context);
-          },
-          child: Container(
-            width: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: selectedDateTime !=null?Text(
-                '${DateFormat.yMMMd().format(selectedDateTime)}',
-                style: TextStyle(
-                  fontSize: ResponsiveWidget.isSmallScreen(context)
-                      ? 15
-                      : ResponsiveWidget.isMediumScreen(context)
-                          ? 16
-                          : 18,
-                ),
-              ):Text("Select Date"),
-            ),
-          ),
-        ),
+        buildDobContainer(context),
         SizedBox(height: 16.0),
         Text(
           "Country: ",
@@ -424,8 +404,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   print("Email:- $_email");
                   print("Pass:- $_password");
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                   showAlertDialog(context);
+
                 }
 
                 /*  String email = _emailController.text;
@@ -451,6 +431,30 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ],
     );
+  }
+
+  InkWell buildDobContainer(BuildContext context) {
+    return InkWell(
+        onTap: () {
+          _selectDate(context);
+        },
+        child: Container(
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: selectedDateTime !=null?Text(
+              '${DateFormat.yMMMd().format(selectedDateTime)}',
+              style: TextStyle(
+                fontSize: ResponsiveWidget.isSmallScreen(context)
+                    ? 15
+                    : ResponsiveWidget.isMediumScreen(context)
+                        ? 16
+                        : 18,
+              ),
+            ):Text("Select Date"),
+          ),
+        ),
+      );
   }
 
   Row buildGenderRadioBtn() {
@@ -525,12 +529,49 @@ class _SignUpPageState extends State<SignUpPage> {
 
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
-      context: context, firstDate: DateTime(1800), initialDate: DateTime.now(), lastDate: DateTime(2500),
+      context: context, firstDate: DateTime(1800), initialDate: DateTime(DateTime.now().year-18), lastDate: DateTime(2500),
       // Refer step 1
     );
     if (picked != null && picked != selectedDateTime)
       setState(() {
         selectedDateTime = picked;
       });
+  }
+
+  // Show alert dialog
+  Future<void> showAlertDialog(BuildContext context) async {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel".toUpperCase()),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Continue".toUpperCase()),
+      onPressed:  () {
+        Navigator.pop(context);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => HomePage()));
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Sign Up"),
+      content: Text("Would you like to continue sign up?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+   await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

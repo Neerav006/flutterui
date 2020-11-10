@@ -2,6 +2,10 @@ import 'package:counter_app/bottomnavbar/fragment_four.dart';
 import 'package:counter_app/bottomnavbar/fragment_one.dart';
 import 'package:counter_app/bottomnavbar/fragment_three.dart';
 import 'package:counter_app/bottomnavbar/fragment_two.dart';
+import 'package:counter_app/pageview/page_four.dart';
+import 'package:counter_app/pageview/page_one.dart';
+import 'package:counter_app/pageview/page_three.dart';
+import 'package:counter_app/pageview/page_two.dart';
 import 'package:flutter/material.dart';
 
 class PageViewWidget extends StatefulWidget {
@@ -12,20 +16,20 @@ class PageViewWidget extends StatefulWidget {
 class _PageViewWidgetState extends State<PageViewWidget> with AutomaticKeepAliveClientMixin{
   PageController _controller = PageController(
     initialPage: 0,
-    viewportFraction: 0.80
+    viewportFraction: 0.8
   );
 
   List<Widget> _pageList= [
-    FragmentOne(
+    PageOne(
       key: PageStorageKey('1'),
     ),
-    FragmentTwo(
+    PageTwo(
       key: PageStorageKey('2'),
     ),
-    FragmentThree(
+    PageThree(
       key: PageStorageKey('3'),
     ),
-    FragmentFour(
+    PageFour(
       key: PageStorageKey('4'),
     )
   ];
@@ -37,13 +41,16 @@ class _PageViewWidgetState extends State<PageViewWidget> with AutomaticKeepAlive
         title: Text('PageView'),
       ),
 
-      body: PageView(
-        controller: _controller,
-        children: _pageList,
-        onPageChanged: (page){
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(0.0,16.0,0.0,16.0),
+        child: PageView(
+          controller: _controller,
+          children: _pageList,
+          onPageChanged: (page){
 
-        },
+          },
 
+        ),
       ),
     );
   }
