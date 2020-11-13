@@ -3,10 +3,18 @@ import 'package:counter_app/aboutus/stream_example.dart';
 import 'package:counter_app/bottomnavbar/bottom_nav_bar.dart';
 import 'package:counter_app/gridviewlist/GridViewPage.dart';
 import 'package:counter_app/pageview/page_view.dart';
+import 'package:counter_app/webviews/webview_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppDrawer extends StatelessWidget {
+
+  final String email;
+  final Function onLogOutPressed;
+  const AppDrawer({Key key, @required this.email,@required this.onLogOutPressed}) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -33,7 +41,14 @@ class AppDrawer extends StatelessWidget {
             Navigator.pop(context);
             Navigator.push(context, MaterialPageRoute(builder: (context) => PageViewWidget(),));
           }),
+          _createDrawerItem(
+              icon: Icons.web, text: 'WebView', onTap: () {
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewPage(),));
+          }),
           Divider(),
+          _createDrawerItem(
+              icon: Icons.logout, text: 'LogOut', onTap: onLogOutPressed),
         ],
       ),
     );
@@ -62,7 +77,7 @@ class AppDrawer extends StatelessWidget {
           Positioned(
               bottom: 12.0,
               left: 16.0,
-              child: Text("abc@gmail.com",
+              child: Text(email??"",
                    textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
@@ -87,3 +102,4 @@ class AppDrawer extends StatelessWidget {
     );
   }
 }
+

@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:counter_app/appdrawer.dart';
+import 'package:counter_app/const/app_constant.dart';
 import 'package:counter_app/gridviewlist/GridViewPage.dart';
 import 'package:counter_app/paginatedlist/paging_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'model/Article.dart';
 
@@ -16,6 +18,8 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   List<Articles> articleList = [];
   TabController _tabController;
+  SharedPreferences sharedPreferences;
+  String email;
 
   @override
   void initState() {
@@ -26,6 +30,14 @@ class _HomePageState extends State<HomePage>
         this.articleList = value.articles;
       });
     });
+
+    AppConstant.getPrefrence().then((value) {
+      setState(() {
+        this.sharedPreferences = value;
+        this.email =
+            this.sharedPreferences.get(AppConstant.PREF_USER_NAME) ?? "";
+      });
+    }).catchError((error) {});
   }
 
   @override
@@ -48,12 +60,20 @@ class _HomePageState extends State<HomePage>
             controller: _tabController,
           ),
         ),*/
-        drawer: AppDrawer(),
+        drawer: AppDrawer(
+          email: email,
+          onLogOutPressed: () async {
+            await sharedPreferences.setBool(AppConstant.PREF_IS_LOGIN, false);
+            Navigator.pop(context);
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                '/login', (Route<dynamic> route) => false);
+          },
+        ),
         body: DefaultTabController(
           length: 2,
           child: NestedScrollView(
-
-            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
               return [
                 SliverAppBar(
                   centerTitle: true,

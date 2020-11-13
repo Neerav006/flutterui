@@ -1,16 +1,19 @@
+import 'package:counter_app/const/app_constant.dart';
 import 'package:counter_app/home.dart';
 import 'package:counter_app/signup/sign_up.dart';
+import 'package:counter_app/splash/splash.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'generated/l10n.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatelessWidget {
+class MaterialAppPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginPageState(),
+      home: SplashPage(),
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -36,7 +39,11 @@ class LoginPage extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
+      routes: {
+        '/login' : (BuildContext context) => new LoginPageState(),
+      },
     );
+
   }
 }
 
@@ -252,13 +259,17 @@ class _LoginPageStateState extends State<LoginPageState> {
                                       fontSize: 16),
                                 ),
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_formKey.currentState.validate()) {
                                   _formKey.currentState.save();
                                   print("Email:- $_email");
                                   print("Pass:- $_password");
 
-                                  Navigator.push(
+                                 SharedPreferences prefrence = await  AppConstant.getPrefrence();
+                                 prefrence.setBool(AppConstant.PREF_IS_LOGIN,true);
+                                 prefrence.setString(AppConstant.PREF_USER_NAME,_email);
+
+                                  Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
@@ -480,7 +491,7 @@ class _LoginPageStateState extends State<LoginPageState> {
                                     print("Email:- $_email");
                                     print("Pass:- $_password");
 
-                                    Navigator.push(
+                                    Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
