@@ -1,6 +1,7 @@
 import 'package:counter_app/aboutus/post_api_page.dart';
 import 'package:counter_app/aboutus/stream_example.dart';
 import 'package:counter_app/bottomnavbar/bottom_nav_bar.dart';
+import 'package:counter_app/googlemap/google_map.dart';
 import 'package:counter_app/gridviewlist/GridViewPage.dart';
 import 'package:counter_app/pageview/page_view.dart';
 import 'package:counter_app/webviews/webview_page.dart';
@@ -45,6 +46,11 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.web, text: 'WebView', onTap: () {
             Navigator.pop(context);
             Navigator.push(context, MaterialPageRoute(builder: (context) => WebViewPage(),));
+          }),
+          _createDrawerItem(
+              icon: Icons.map, text: 'Map', onTap: () {
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => GoogleMapSample(),));
           }),
           Divider(),
           _createDrawerItem(
