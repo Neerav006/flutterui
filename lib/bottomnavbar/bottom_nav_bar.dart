@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class BottomNavBar extends StatefulWidget {
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
@@ -16,10 +17,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   int currentIndex = 0;
   DateTime currentBackPressTime;
+   Function(int) onPageChanged;
+   Widget fragmentOne;
+
   List<Widget> _widgetList = [
-    FragmentOne(
-      key: PageStorageKey('1'),
-    ),
     FragmentTwo(
       key: PageStorageKey('2'),
     ),
@@ -30,8 +31,16 @@ class _BottomNavBarState extends State<BottomNavBar> {
       key: PageStorageKey('4'),
     )
   ];
+
   final PageStorageBucket bucket = PageStorageBucket();
 
+   @override
+  void initState() {
+     fragmentOne = FragmentOne(key: PageStorageKey('1'),onPageChanged: onPageChanged,);
+     _widgetList.insert(0,fragmentOne);
+
+    super.initState();
+  }
 
 
   @override
@@ -71,6 +80,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           onTap: (index) {
             setState(() {
               this.currentIndex = index;
+              onPageChanged(index);
             });
           },
         ),
