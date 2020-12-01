@@ -9,6 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'localdb/local_db_example.dart';
+
 class AppDrawer extends StatelessWidget {
 
   final String email;
@@ -51,6 +53,11 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.map, text: 'Map', onTap: () {
             Navigator.pop(context);
             Navigator.push(context, MaterialPageRoute(builder: (context) => GoogleMapSample(),));
+          }),
+          _createDrawerItem(
+              icon: Icons.map, text: 'Local DB', onTap: () {
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => LocalDbExample(),));
           }),
           Divider(),
           _createDrawerItem(
