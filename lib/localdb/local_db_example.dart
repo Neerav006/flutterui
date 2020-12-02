@@ -37,16 +37,72 @@ class _LocalDbExampleState extends State<LocalDbExample> {
       body: ListView.builder(itemBuilder: (context, index) {
          return _list.isEmpty || _list == null ? Center(child: Container(child: Text('No todo found.'),)):
           Padding(
-           padding: const EdgeInsets.all(8.0),
-           child: Card(
-               elevation: 5,
-               child: Column(
-                 children: [
-                   Text(_list[index].title??""),
-                   SizedBox(height: 8,),
-                   Text(_list[index].description??""),
-                 ],
-               )),
+           padding: const EdgeInsets.fromLTRB(8.0,8.0,8.0,0.0),
+           child: GestureDetector(
+             onTap: () async {
+               // add todos screen here
+               String  result =  await Navigator.push(context, MaterialPageRoute(builder: (context) => AddTodoExample(todo: _list[index],),));
+               if(result!=null){
+                 databaseHelper.getTodoList().then((value) {
+                   if(value!=null){
+                     setState(() {
+                       this._list = value;
+                     });
+
+                   }
+                 })
+                     .catchError((error){
+
+                 });
+               }
+             },
+             child: Card(
+                 elevation: 5,
+                 child: Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: Row(
+                     children: [
+                       Expanded(
+                         child: Column(
+                           crossAxisAlignment: CrossAxisAlignment.start,
+                           children: [
+                             Text(_list[index].title??"",style: Theme.of(context).textTheme.subtitle1,),
+                             SizedBox(height: 4,),
+                             Text(_list[index].description??""),
+                           ],
+                         ),
+                       ),
+                       InkWell(
+                           onTap: (){
+                             // delete todos
+                             deleteTodo(_list[index]).then((value) {
+                                 setState(() {
+                                   databaseHelper.getTodoList().then((value) {
+                                     if(value!=null){
+                                       setState(() {
+                                         this._list = value;
+                                       });
+
+                                     }
+                                   })
+                                       .catchError((error){
+
+                                   });
+                                 });
+                             })
+                             .catchError((error){
+
+                             });
+                           },
+                           child: Padding(
+                             padding: const EdgeInsets.all(8.0),
+                             child: Icon(Icons.delete,color: Colors.red,),
+                           )
+                       )
+                     ],
+                   ),
+                 )),
+           ),
          );
 
       },
@@ -54,12 +110,29 @@ class _LocalDbExampleState extends State<LocalDbExample> {
       ),
       floatingActionButton: FloatingActionButton(
          child: Icon(Icons.add),
-         onPressed: (){
+         onPressed: () async {
            // add todos screen here
-           Navigator.push(context, MaterialPageRoute(builder: (context) => AddTodoExample(todo: Todo('', ''),),));
+          String  result =  await Navigator.push(context, MaterialPageRoute(builder: (context) => AddTodoExample(todo: Todo('', ''),),));
+          if(result!=null){
+            databaseHelper.getTodoList().then((value) {
+              if(value!=null){
+                setState(() {
+                  this._list = value;
+                });
+
+              }
+            })
+                .catchError((error){
+
+            });
+          }
          },
 
       ),
     );
   }
+
+   Future<void> deleteTodo(Todo todo) async {
+    await databaseHelper.deleteTodo(todo.id);
+   }
 }

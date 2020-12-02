@@ -53,7 +53,7 @@ class DatabaseHelper {
     Database db = await this.database;
 
 //		var result = await db.rawQuery('SELECT * FROM $todoTable order by $colTitle ASC');
-    var result = await db.query(todoTable, orderBy: '$colTitle ASC');
+    var result = await db.query(todoTable, orderBy: '$colDate DESC');
     return result;
   }
 

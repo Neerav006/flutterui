@@ -19,76 +19,93 @@ class _AddTodoExampleState extends State<AddTodoExample> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController= TextEditingController();
   DatabaseHelper helper = DatabaseHelper();
+
+  @override
+  void initState() {
+    setState(() {
+      _titleController.text = widget.todo.title??"";
+      _descriptionController.text = widget.todo.description??"";
+    });
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle = Theme.of(context).textTheme.title;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add Todo'),
-      ),
-      body: SingleChildScrollView(
-
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              TextField(
-                controller: _titleController,
-                onChanged: (value) {
-
-                },
-                decoration: InputDecoration(
-                    labelText: 'Title',
-                    labelStyle: textStyle,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0)
-                    )
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: _descriptionController,
-                onChanged: (value) {
-
-                },
-                decoration: InputDecoration(
-                    labelText: 'Description',
-                    labelStyle: textStyle,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0)
-                    )
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              RaisedButton(onPressed: (){
-                 if(_titleController.text.trim().isEmpty){
-                   Fluttertoast.showToast(
-                       msg: "Title is empty",
-                       toastLength: Toast.LENGTH_SHORT,
-                   );
-                 }
-                 else if(_descriptionController.text.trim().isEmpty){
-                   Fluttertoast.showToast(
-                     msg: "Description is empty",
-                     toastLength: Toast.LENGTH_SHORT,
-                   );
-                 }
-                 else{
-                    // save todos in database here
-                    _save(_titleController.text,_descriptionController.text);
-                 }
-              },
-              child: Text('Add'),
-              )
-
-            ],
-          ),
+    return WillPopScope(
+      onWillPop: (){
+        Navigator.pop(context,"true");
+        return Future.value(true);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Add Todo'),
         ),
+        body: SingleChildScrollView(
 
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                TextField(
+                  controller: _titleController,
+                  onChanged: (value) {
+
+                  },
+                  decoration: InputDecoration(
+                      labelText: 'Title',
+                      labelStyle: textStyle,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0)
+                      )
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextField(
+                  controller: _descriptionController,
+                  onChanged: (value) {
+
+                  },
+                  decoration: InputDecoration(
+                      labelText: 'Description',
+                      labelStyle: textStyle,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.0)
+                      )
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                RaisedButton(onPressed: (){
+                   if(_titleController.text.trim().isEmpty){
+                     Fluttertoast.showToast(
+                         msg: "Title is empty",
+                         toastLength: Toast.LENGTH_SHORT,
+                     );
+                   }
+                   else if(_descriptionController.text.trim().isEmpty){
+                     Fluttertoast.showToast(
+                       msg: "Description is empty",
+                       toastLength: Toast.LENGTH_SHORT,
+                     );
+                   }
+                   else{
+                      // save todos in database here
+                      _save(_titleController.text,_descriptionController.text);
+                   }
+                },
+                child: Text('Add'),
+                )
+
+              ],
+            ),
+          ),
+
+        ),
       ),
     );
   }
@@ -120,10 +137,17 @@ class _AddTodoExampleState extends State<AddTodoExample> {
     AlertDialog alertDialog = AlertDialog(
       title: Text(title),
       content: Text(message),
+      actions: [
+        FlatButton(onPressed: (){
+          Navigator.pop(context,"true");
+        }, child: Text('Ok'))
+      ],
     );
     showDialog(
         context: context,
         builder: (_) => alertDialog
     );
   }
+
+
 }
