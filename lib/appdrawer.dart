@@ -1,5 +1,6 @@
 import 'package:counter_app/aboutus/post_api_page.dart';
 import 'package:counter_app/aboutus/stream_example.dart';
+import 'package:counter_app/basicwidgets/basic_widget.dart';
 import 'package:counter_app/bottomnavbar/bottom_nav_bar.dart';
 import 'package:counter_app/googlemap/google_map.dart';
 import 'package:counter_app/gridviewlist/GridViewPage.dart';
@@ -58,6 +59,12 @@ class AppDrawer extends StatelessWidget {
               icon: Icons.map, text: 'Local DB', onTap: () {
             Navigator.pop(context);
             Navigator.push(context, MaterialPageRoute(builder: (context) => LocalDbExample(),));
+          }),
+          Divider(),
+          _createDrawerItem(
+              icon: Icons.widgets, text: 'Widgets', onTap: () {
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => BasicWidgetExp(),));
           }),
           Divider(),
           _createDrawerItem(
